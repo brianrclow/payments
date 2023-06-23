@@ -24,5 +24,5 @@ export abstract class BaseOrder {
 export enum OrderState {
   INVALID = 'INVALID',
   PROVISIONAL = 'PROVISIONAL',
-  VALID = 'VALID'
+  VALID = 'VALID',
 }

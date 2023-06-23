@@ -3,8 +3,8 @@ import { NativeScriptCommonModule, NativeScriptRouterModule } from '@nativescrip
 import { GooglePayComponent } from './google-pay.component';
 
 @NgModule({
-	imports: [NativeScriptCommonModule, NativeScriptRouterModule.forChild([{ path: '', component: GooglePayComponent }])],
+  imports: [NativeScriptCommonModule, NativeScriptRouterModule.forChild([{ path: '', component: GooglePayComponent }])],
   declarations: [GooglePayComponent],
-  schemas: [ NO_ERRORS_SCHEMA]
+  schemas: [NO_ERRORS_SCHEMA],
 })
 export class GooglePayModule {}

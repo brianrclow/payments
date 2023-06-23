@@ -4,34 +4,35 @@ A plugin that allows you to offer [Apple Pay](https://developer.apple.com/docume
 
 ## Contents
 
-* [Installation](#installation)
-* [Requirements](#requirements)
-* [Use @nativescript/apple-pay](#use-nativescriptapple-pay)
-  * [Implement Apple Pay](#implement-apple-pay)
-* [API](#api)
-  * [ApplePayBtn class](#applepaybtn-class)
-  * [Enums](#enums)
-      * [ApplePayEvents](#applepayevents)
-      * [ApplePayContactFields](#applepaycontactfields)
-      * [ApplePayNetworks](#applepaynetworks)
-      * [ApplePayMerchantCapability](#applepaymerchantcapability)
-      * [ApplePayMerchantCapaApplePayTransactionStatusbility](#applepaymerchantcapaapplepaytransactionstatusbility)
-      * [ApplePayPaymentItemType](#applepaypaymentitemtype)
-      * [ApplePayButtonType](#applepaybuttontype)
-      * [ApplePayButtonStyle](#applepaybuttonstyle)
-  * [Interfaces](#interfaces)
-    * [ApplePayRequest](#applepayrequest)
-    * [ApplePayItems](#applepayitems)
-    * [AuthorizePaymentEventData](#authorizepaymenteventdata)
-    * [AuthorizationDidFinishEventData](#authorizationdidfinisheventdata)
-    * [ApplePayPaymentData](#applepaypaymentdata)
-* [License](#license)
+- [Installation](#installation)
+- [Requirements](#requirements)
+- [Use @nativescript/apple-pay](#use-nativescriptapple-pay)
+  - [Implement Apple Pay](#implement-apple-pay)
+- [API](#api)
+  - [ApplePayBtn class](#applepaybtn-class)
+  - [Enums](#enums)
+    - [ApplePayEvents](#applepayevents)
+    - [ApplePayContactFields](#applepaycontactfields)
+    - [ApplePayNetworks](#applepaynetworks)
+    - [ApplePayMerchantCapability](#applepaymerchantcapability)
+    - [ApplePayMerchantCapaApplePayTransactionStatusbility](#applepaymerchantcapaapplepaytransactionstatusbility)
+    - [ApplePayPaymentItemType](#applepaypaymentitemtype)
+    - [ApplePayButtonType](#applepaybuttontype)
+    - [ApplePayButtonStyle](#applepaybuttonstyle)
+  - [Interfaces](#interfaces)
+    - [ApplePayRequest](#applepayrequest)
+    - [ApplePayItems](#applepayitems)
+    - [AuthorizePaymentEventData](#authorizepaymenteventdata)
+    - [AuthorizationDidFinishEventData](#authorizationdidfinisheventdata)
+    - [ApplePayPaymentData](#applepaypaymentdata)
+- [License](#license)
 
 ## Installation
 
 ```shell
 ns plugin add @nativescript/apple-pay
 ```
+
 ## Requirements
 
 For Apple Pay to work in your iOS application, you need to complete the following steps. These steps are also outlined in the [Apple PassKit documentation](https://developer.apple.com/documentation/passkit/apple_pay/setting_up_apple_pay_requirements).
@@ -52,7 +53,6 @@ For a video showing the configuration steps, see: [Configuring Your Developer Ac
 
 Once that configuration is done for your Apple developer account, you will be able to use the [PassKit](https://developer.apple.com/documentation/passkit?language=objc) framework for Apple Pay inside your iOS application.
 
-
 ## Use @nativescript/apple-pay
 
 ### Implement Apple Pay
@@ -69,46 +69,44 @@ To implement Apple Pay in your app, follow the following steps:
     ></ApplePayBtn>
 </ios>
 ```
+
 2. Handle the button's `tap` event
+
 ```ts
 export class ApplePayViewModel extends Observable {
-  
-  constructor(){
-    super()
+  constructor() {
+    super();
   }
 
-  onApplePayTap() {
-
-  }
+  onApplePayTap() {}
 }
-
 ```
+
 In the tap event's callback function(`onApplePayTap` in this exampl), do the following:
 
-  1. Check if Apple Pay is supported by calling `isApplePaySupported()`
+1. Check if Apple Pay is supported by calling `isApplePaySupported()`
 
-  ```ts
-  import { isApplePaySupported } from '@nativescript/apple-pay'
+```ts
+import { isApplePaySupported } from '@nativescript/apple-pay';
 
-  if(isApplePaySupported()){
+if (isApplePaySupported()) {
+}
+```
 
-  }
-  ```
-
-  2. Listen to the `DidAuthorizePaymentHandler`(and `AuthorizationDidFinish`) event
+2. Listen to the `DidAuthorizePaymentHandler`(and `AuthorizationDidFinish`) event
 
 ```ts
 applePayBtn.once(ApplePayEvents.DidAuthorizePaymentHandler, async (args: AuthorizePaymentEventData) => {
   // 1. Send the user payment data to your payments services provider(PSP)
   // 2. Use the response from the PSP to further process your transation, or
   // close the payment sheet
-}
-)
+});
 ```
-  - The `DidAuthorizePaymentHandler` event is emitted when a user authorizes the app to make payments with their payment data.
-  - Make a call to your payments services provider(Stripe, PayPal, etc) sending the user's data and other transactional data([AuthorizePaymentEventData](#authorizepaymenteventdata) object) received from the event. 
 
-  3. If Apple Pay is supported, present the user with the payment sheet by calling the `createPaymentRequest()` method on the `ApplePayBtn` instance passing it an [ApplePayRequest](#applepayrequest) object. 
+- The `DidAuthorizePaymentHandler` event is emitted when a user authorizes the app to make payments with their payment data.
+- Make a call to your payments services provider(Stripe, PayPal, etc) sending the user's data and other transactional data([AuthorizePaymentEventData](#authorizepaymenteventdata) object) received from the event.
+
+3. If Apple Pay is supported, present the user with the payment sheet by calling the `createPaymentRequest()` method on the `ApplePayBtn` instance passing it an [ApplePayRequest](#applepayrequest) object.
 
 ```ts
 const request = {
@@ -126,30 +124,32 @@ await applePayBtn.createPaymentRequest(request).catch((err) => {
 				console.log('Apple Pay Error', err);
 			  });
 ```
+
 Find the complete code [here](https://github.com/NativeScript/payments/blob/main/apps/demo/src/plugin-demos/apple-pay.ts).
 
 # API
 
-## ApplePayBtn 
+## ApplePayBtn
+
 The view to initiate and complete payments with Apple Pay.
 
-| Method | Description
-|:----|:------------
+| Method                                           | Description                                                                         |
+| :----------------------------------------------- | :---------------------------------------------------------------------------------- |
 | `createPaymentRequest(request: ApplePayRequest)` | Creates the Apple Pay payment request and presents the user with the payment sheet. |
 
 ## Enums
 
 ### ApplePayEvents
 
-| Key | Description
-|:----|:-----------
+| Key                          | Description                                                                                                                                                                |
+| :--------------------------- | :------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | `DidAuthorizePaymentHandler` | Tells the delegate that the user has authorized the payment request and asks for a result. For the event data, see [AuthorizePaymentEventData](#authorizepaymenteventdata) |
-| `AuthorizationDidFinish`     | Tells the delegate that payment authorization has completed. For the event data, [AuthorizationDidFinishEventData](#authorizationdidfinisheventdata)                              |
+| `AuthorizationDidFinish`     | Tells the delegate that payment authorization has completed. For the event data, [AuthorizationDidFinishEventData](#authorizationdidfinisheventdata)                       |
 
 ### ApplePayContactFields
 
-| Key           | Description                       |
-| ------------- | --------------------------------- |
+| Key             | Description                       |
+| --------------- | --------------------------------- |
 | `EmailAddress`  | Indicates an email address field. |
 | `Name`          | Indicates a name field.           |
 | `PhoneNumber`   | Indicates a phone number field.   |
@@ -222,7 +222,6 @@ The view to initiate and complete payments with Apple Pay.
 | Subscribe | PKPaymentButtonType.Subscribe |
 
 ### ApplePayButtonStyle
-
 
 | Key          | Value                             |
 | ------------ | --------------------------------- |

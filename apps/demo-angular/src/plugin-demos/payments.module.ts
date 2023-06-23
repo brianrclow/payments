@@ -3,8 +3,8 @@ import { NativeScriptCommonModule, NativeScriptRouterModule } from '@nativescrip
 import { PaymentsComponent } from './payments.component';
 
 @NgModule({
-	imports: [NativeScriptCommonModule, NativeScriptRouterModule.forChild([{ path: '', component: PaymentsComponent }])],
+  imports: [NativeScriptCommonModule, NativeScriptRouterModule.forChild([{ path: '', component: PaymentsComponent }])],
   declarations: [PaymentsComponent],
-  schemas: [ NO_ERRORS_SCHEMA]
+  schemas: [NO_ERRORS_SCHEMA],
 })
 export class PaymentsModule {}

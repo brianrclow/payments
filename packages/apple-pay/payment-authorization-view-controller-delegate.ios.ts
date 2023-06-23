@@ -30,7 +30,7 @@ class PKPaymentAuthorizationViewControllerDelegateImpl extends NSObject implemen
 
     owner?.notify({
       eventName: ApplePayEvents.AuthorizationDidFinish,
-      object: owner
+      object: owner,
     } as AuthorizationDidFinishEventData);
   }
 
@@ -57,9 +57,9 @@ class PKPaymentAuthorizationViewControllerDelegateImpl extends NSObject implemen
         billingContact: payment.billingContact,
         shippingAddress: payment.shippingAddress,
         shippingContact: payment.shippingContact,
-        shippingMethod: payment.shippingMethod
+        shippingMethod: payment.shippingMethod,
       },
-      completion
+      completion,
     } as AuthorizePaymentEventData;
     owner?.notify(eventData);
   }

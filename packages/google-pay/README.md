@@ -3,30 +3,31 @@
 A plugin that allows you to offer [Google Pay](https://developers.google.com/pay/api/android/overview) in your Android app.
 
 ## Contents
-* [Installation](#installation)
-* [Prerequisites](#prerequisites)
-* [Important note about payment token](#important-note-about-payment-token)
-* [Use @nativescript/google-pay](#use-nativescriptgoogle-pay)
-* [API](#api)
-  * [GooglePayBtn class](#googlepaybtn-class)
-  * [Enums](#enums)
-    * [GooglePayAuthMethods](#googlepayauthmethods)
-    * [GooglePayCardNetworks](#googlepaycardnetworks)
-    * [GooglePayEvents](#googlepayevents)
-    * [TokenizationSpecificationType](#tokenizationspecificationtype)
-    * [BillingAddressParametersFormat](#billingaddressparametersformat)
-    * [AllowedPaymentMethodsType](#allowedpaymentmethodstype)
-    * [TotalPriceStatusValue](#totalpricestatusvalue)
-    * [CheckoutOptionValue](#checkoutoptionvalue)
-    * [GooglePayButtonType](#googlepaybuttontype)
-  * [Interfaces](#interfaces)
-    * [GooglePayRequest](#googlepayrequest)
-    * [PaymentCancelledEventData](#paymentcancelledeventdata)
-    * [PaymentErrorEventData](#paymenterroreventdata)
-    * [PaymentSuccessEventData](#paymentsuccesseventdata)
-    * [Address](#address)
-    * [GooglePayDisplayItems](#googlepaydisplayitems)
-* [License](#license)
+
+- [Installation](#installation)
+- [Prerequisites](#prerequisites)
+- [Important note about payment token](#important-note-about-payment-token)
+- [Use @nativescript/google-pay](#use-nativescriptgoogle-pay)
+- [API](#api)
+  - [GooglePayBtn class](#googlepaybtn-class)
+  - [Enums](#enums)
+    - [GooglePayAuthMethods](#googlepayauthmethods)
+    - [GooglePayCardNetworks](#googlepaycardnetworks)
+    - [GooglePayEvents](#googlepayevents)
+    - [TokenizationSpecificationType](#tokenizationspecificationtype)
+    - [BillingAddressParametersFormat](#billingaddressparametersformat)
+    - [AllowedPaymentMethodsType](#allowedpaymentmethodstype)
+    - [TotalPriceStatusValue](#totalpricestatusvalue)
+    - [CheckoutOptionValue](#checkoutoptionvalue)
+    - [GooglePayButtonType](#googlepaybuttontype)
+  - [Interfaces](#interfaces)
+    - [GooglePayRequest](#googlepayrequest)
+    - [PaymentCancelledEventData](#paymentcancelledeventdata)
+    - [PaymentErrorEventData](#paymenterroreventdata)
+    - [PaymentSuccessEventData](#paymentsuccesseventdata)
+    - [Address](#address)
+    - [GooglePayDisplayItems](#googlepaydisplayitems)
+- [License](#license)
 
 ## Installation
 
@@ -45,7 +46,7 @@ Before you get started, review the following prerequisites:
 
 ## Important note about payment token
 
-If you're using a payments service provider, you need a valid payment token for your app in  production mode. You can view the configuration for a number of [providers in the Google documentation.](https://developers.google.com/pay/api/android/guides/tutorial#tokenization).
+If you're using a payments service provider, you need a valid payment token for your app in production mode. You can view the configuration for a number of [providers in the Google documentation.](https://developers.google.com/pay/api/android/guides/tutorial#tokenization).
 
 During development you can use the example below for the gateway token configuration when creating a payment request.
 
@@ -74,42 +75,34 @@ To implement Google Pay in your app, follow the steps below:
     ></GooglePayBtn>
 </android>
 ```
+
 2. Listen to the GooglePayBtn tap event
 
 Tapping the GooglePayBtn initiates payment with Google Pay. In the `tap` event handler(`onGooglePayTap` function ), manage the payments with Google Pay as follows:
 
-  1. Listen to the `GooglePayEvents.PaymentSuccess` event on the button instance.
-  - The event is emitted when a user approves your app to make payments with their Google Pay payments data.
-  - The `GooglePayEvents.PaymentSuccess` event's callback receives a token and other data, of [PaymentSuccessEventData](#paymentsuccesseventdata) from Google Pay. You send that to your payments services provider for payment processing.
+1. Listen to the `GooglePayEvents.PaymentSuccess` event on the button instance.
 
-  ```ts
-  googlePayBtn.once(
-          GooglePayEvents.PaymentSuccess,
-          async (args: PaymentSuccessEventData) => {
+- The event is emitted when a user approves your app to make payments with their Google Pay payments data.
+- The `GooglePayEvents.PaymentSuccess` event's callback receives a token and other data, of [PaymentSuccessEventData](#paymentsuccesseventdata) from Google Pay. You send that to your payments services provider for payment processing.
 
-            const payloadToBackend = {
-                amount: 25.20,
-                method: '3DS',
-                '3DS': {
-                  signature:
-                    args.data.paymentMethodData.tokenizationData.token.signature,
-                  type: 'G', // for Google
-                  version:
-                    args.data.paymentMethodData.tokenizationData.token
-                      .protocolVersion,
-                  data:
-                    args.data.paymentMethodData.tokenizationData.token
-                      .signedMessage
-                }
-              };
+```ts
+googlePayBtn.once(GooglePayEvents.PaymentSuccess, async (args: PaymentSuccessEventData) => {
+  const payloadToBackend = {
+    amount: 25.2,
+    method: '3DS',
+    '3DS': {
+      signature: args.data.paymentMethodData.tokenizationData.token.signature,
+      type: 'G', // for Google
+      version: args.data.paymentMethodData.tokenizationData.token.protocolVersion,
+      data: args.data.paymentMethodData.tokenizationData.token.signedMessage,
+    },
+  };
 
-              // send the user payments data to your payments services provider here
-              const result = await someHttpCallToPaymentServiceProvider(
-                payloadToBackend
-              );
+  // send the user payments data to your payments services provider here
+  const result = await someHttpCallToPaymentServiceProvider(payloadToBackend);
+});
+```
 
-          })
-  ```
     2. Present the user with the payment sheet.
 
     To present the user with the payment sheet to complete the transaction, call the
@@ -162,6 +155,7 @@ Tapping the GooglePayBtn initiates payment with Google Pay. In the `tap` event h
         console.log('error with create payment request', err);
       });
       ```
+
 You can find a complete code example for above steps[here](#https://github.com/NativeScript/payments/blob/main/apps/demo/src/plugin-demos/google-pay.ts)
 
 ## API
@@ -170,18 +164,17 @@ You can find a complete code example for above steps[here](#https://github.com/N
 
 A class to initiate and manage payment with Google Pay.
 
-
-| Method | Returns | Description
-|:-------|:--------|:-----------
+| Method                                         | Returns            | Description                                                                          |
+| :--------------------------------------------- | :----------------- | :----------------------------------------------------------------------------------- |
 | `createPaymentRequest(args: GooglePayRequest)` | `Promise<unknown>` | Creates the Google Pay payment request and presents the user with the payment sheet. |
 
 ### Enums
 
 #### GooglePayAuthMethods
 
-| Key | Description 
-|:-----|:-----------
-| `PAN_ONLY` | This authentication method is associated with payment cards stored on file with the user's Google Account. Returned payment data includes personal account number (PAN) with the expiration month and the expiration year. |
+| Key              | Description                                                                                                                                                                                                                |
+| :--------------- | :------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `PAN_ONLY`       | This authentication method is associated with payment cards stored on file with the user's Google Account. Returned payment data includes personal account number (PAN) with the expiration month and the expiration year. |
 | `CRYPTOGRAM_3DS` | This authentication method is associated with cards stored as Android device tokens. Returned payment data includes a 3-D Secure (3DS) cryptogram generated on the device.                                                 |
 
 #### GooglePayCardNetworks
@@ -205,15 +198,15 @@ A class to initiate and manage payment with Google Pay.
 
 #### TokenizationSpecificationType
 
-| Enum | Description
-|:-----|:------------
-| `PAYMENT_GATEWAY` | To retrieve payment and customer information from a payment gateway that's supported by the Google Pay API, set type to `PAYMENT_GATEWAY`                                                            
+| Enum              | Description                                                                                                                                                                                                                                                                                                 |
+| :---------------- | :---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `PAYMENT_GATEWAY` | To retrieve payment and customer information from a payment gateway that's supported by the Google Pay API, set type to `PAYMENT_GATEWAY`                                                                                                                                                                   |
 | `DIRECT`          | The Direct integration allows merchants to decrypt the Google Pay response on their servers. To qualify, you must be Payments Card Industry (PCI) Data Security Standard (DSS) Level 1 compliant. Your servers also need to have the required infrastructure to securely handle users' payment credentials. |
 
 ### BillingAddressParametersFormat
 
-| Key  | Description                                                            |
-| ---- | ---------------------------------------------------------------------- |
+| Key    | Description                                                            |
+| ------ | ---------------------------------------------------------------------- |
 | `MIN`  | Name, country code, and postal code (default).                         |
 | `FULL` | Name, street address, locality, region, country code, and postal code. |
 
@@ -225,18 +218,18 @@ A class to initiate and manage payment with Google Pay.
 
 ### TotalPriceStatusValue
 
-| Key | Description
-|:----|:-----------
+| Key                   | Description                                                                                                          |
+| :-------------------- | :------------------------------------------------------------------------------------------------------------------- |
 | `NOT_CURRENTLY_KNOWN` | Used for a capability check. Do not use this property if the transaction is processed in an EEA country.             |
 | `ESTIMATED`           | Total price may adjust based on the details of the response, such as sales tax collected based on a billing address. |
 | `FINAL`               | Total price doesn't change from the amount presented to the shopper.                                                 |
 
 ### CheckoutOptionValue
 
-| Key | Description
-|:----|:-----------
-| `DEFAULT` | Standard text applies for the given totalPriceStatus (default).  
-| `COMPLETE_IMMEDITATE_PURCHASE` | The selected payment method is charged immediately after the payer confirms their selections. This option is only available when [totalPriceStatus](#totalpricestatusvalue) is set to `FINAL`. 
+| Key                            | Description                                                                                                                                                                                    |
+| :----------------------------- | :--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `DEFAULT`                      | Standard text applies for the given totalPriceStatus (default).                                                                                                                                |
+| `COMPLETE_IMMEDITATE_PURCHASE` | The selected payment method is charged immediately after the payer confirms their selections. This option is only available when [totalPriceStatus](#totalpricestatusvalue) is set to `FINAL`. |
 
 ### GooglePayButtonType
 
@@ -446,6 +439,7 @@ interface PaymentCancelledEventData extends EventData {
   object: any;
 }
 ```
+
 ### PaymentErrorEventData
 
 ```ts

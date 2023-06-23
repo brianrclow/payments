@@ -11,7 +11,7 @@ export enum ApplePayEvents {
   DidSelectPaymentMethodHandler = 'DidSelectPaymentMethodHandler',
   DidSelectShippingContactHandler = 'DidSelectShippingContactHandler',
   DidSelectShippingMethodHandler = 'DidSelectShippingMethodHandler',
-  WillAuthorizePayment = 'WillAuthorizePayment'
+  WillAuthorizePayment = 'WillAuthorizePayment',
 }
 
 export enum ApplePayContactFields {
@@ -38,7 +38,7 @@ export enum ApplePayContactFields {
   /**
    * Indicates a postal address field.
    */
-  PostalAddress = 'post'
+  PostalAddress = 'post',
 }
 
 export enum ApplePayNetworks {
@@ -61,14 +61,14 @@ export enum ApplePayNetworks {
   QuicPay = 'QuicPay',
   Suica = 'Suica',
   Visa = 'Visa',
-  VPay = 'VPay'
+  VPay = 'VPay',
 }
 
 export enum ApplePayMerchantCapability {
   ThreeDS = PKMerchantCapability.Capability3DS,
   EMV = PKMerchantCapability.CapabilityEMV,
   Credit = PKMerchantCapability.CapabilityCredit,
-  Debit = PKMerchantCapability.CapabilityDebit
+  Debit = PKMerchantCapability.CapabilityDebit,
 }
 
 export enum ApplePayShippingMethods {}
@@ -81,12 +81,12 @@ export enum ApplePayTransactionStatus {
   'InvalidShippingContact' = PKPaymentAuthorizationStatus.InvalidShippingContact,
   'PINRequired' = PKPaymentAuthorizationStatus.PINRequired,
   'PINIncorrect' = PKPaymentAuthorizationStatus.PINIncorrect,
-  'PINLockout' = PKPaymentAuthorizationStatus.PINLockout
+  'PINLockout' = PKPaymentAuthorizationStatus.PINLockout,
 }
 
 export enum ApplePayPaymentItemType {
   'Final' = PKPaymentSummaryItemType.Final,
-  'Pending' = PKPaymentSummaryItemType.Pending
+  'Pending' = PKPaymentSummaryItemType.Pending,
 }
 
 export enum ApplePayButtonType {
@@ -96,11 +96,11 @@ export enum ApplePayButtonType {
   'Checkout' = PKPaymentButtonType.Checkout,
   'Donate' = PKPaymentButtonType.Donate,
   'InStore' = PKPaymentButtonType.Book,
-  'Subscribe' = PKPaymentButtonType.Subscribe
+  'Subscribe' = PKPaymentButtonType.Subscribe,
 }
 
 export enum ApplePayButtonStyle {
   'White' = PKPaymentButtonStyle.White,
   'WhiteOutline' = PKPaymentButtonStyle.WhiteOutline,
-  'Black' = PKPaymentButtonStyle.Black
+  'Black' = PKPaymentButtonStyle.Black,
 }

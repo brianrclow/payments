@@ -28,14 +28,14 @@ export declare enum ApplePayEvents {
   DidSelectShippingMethodHandler = 'DidSelectShippingMethodHandler',
   WillAuthorizePayment = 'WillAuthorizePayment',
   AuthorizationDidFinish = 'AuthorizationDidFinish',
-  AuthorizationDidFinishEventData = 'AuthorizationDidFinishEventData'
+  AuthorizationDidFinishEventData = 'AuthorizationDidFinishEventData',
 }
 export declare enum ApplePayContactFields {
   EmailAddress = 'email',
   Name = 'name',
   PhoneNumber = 'phone',
   PhoneticName = 'phoneticName',
-  PostalAddress = 'post'
+  PostalAddress = 'post',
 }
 export declare enum ApplePayNetworks {
   Amex = 'Amex',
@@ -57,13 +57,13 @@ export declare enum ApplePayNetworks {
   QuicPay = 'QuicPay',
   Suica = 'Suica',
   Visa = 'Visa',
-  VPay = 'VPay'
+  VPay = 'VPay',
 }
 export declare enum ApplePayMerchantCapability {
   ThreeDS = 1,
   EMV = 2,
   Credit = 4,
-  Debit = 8
+  Debit = 8,
 }
 export declare enum ApplePayShippingMethods {}
 export interface ApplePayRequest {
@@ -86,11 +86,11 @@ export declare enum ApplePayTransactionStatus {
   'InvalidShippingPostalAddress' = PKPaymentAuthorizationStatus.InvalidShippingPostalAddress,
   'PINIncorrect' = PKPaymentAuthorizationStatus.PINIncorrect,
   'PINLockout' = PKPaymentAuthorizationStatus.PINLockout,
-  'PINRequired' = PKPaymentAuthorizationStatus.PINRequired
+  'PINRequired' = PKPaymentAuthorizationStatus.PINRequired,
 }
 export declare enum ApplePayPaymentItemType {
   'Final' = PKPaymentSummaryItemType.Final,
-  'Pending' = PKPaymentSummaryItemType.Pending
+  'Pending' = PKPaymentSummaryItemType.Pending,
 }
 
 export interface ApplePayPaymentData {

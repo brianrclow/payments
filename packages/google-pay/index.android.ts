@@ -79,7 +79,7 @@ export class GooglePayBtn extends View {
     const task = this._paymentsClient.isReadyToPay(request); // Task<Boolean>
 
     const listener = new (com.google.android.gms as any).tasks.OnCompleteListener({
-      onComplete: args => {
+      onComplete: (args) => {
         if (args.isSuccessful()) {
           // set the click listener for the native button
           const clickListener = new ClickListenerImpl(this);
@@ -121,7 +121,7 @@ export class GooglePayBtn extends View {
           console.log('Google Pay is not supported on this device.', args.getException());
           this._android.setVisibility(android.view.View.GONE);
         }
-      }
+      },
     });
 
     task.addOnCompleteListener(Application.android.startActivity || Application.android.foregroundActivity, listener);
@@ -150,7 +150,7 @@ export class GooglePayBtn extends View {
           paymentDataRequest.put('shippingAddressRequired', true);
 
           const countryCodesArray = new JSONArray();
-          args.shippingAddressParameters.allowedCountryCodes.forEach(el => {
+          args.shippingAddressParameters.allowedCountryCodes.forEach((el) => {
             countryCodesArray.put(el);
           });
           paymentDataRequest.put('shippingAddressParameters', new JSONObject().put('allowedCountryCodes', countryCodesArray).put('phoneNumberRequired', args.shippingAddressParameters.phoneNumberRequired));
@@ -278,7 +278,7 @@ export class GooglePayBtn extends View {
           }
 
           // https://developers.google.com/pay/api/web/reference/response-objects
-          this.notify(({
+          this.notify({
             eventName: GooglePayEvents.PaymentSuccess,
             object: this,
             data: {
@@ -294,21 +294,21 @@ export class GooglePayBtn extends View {
                     protocolVersion,
                     signature,
                     signedMessage,
-                    rawToken: token
-                  }
-                }
+                    rawToken: token,
+                  },
+                },
               },
               email,
-              shippingAddress
-            }
-          } as unknown) as PaymentSuccessEventData);
+              shippingAddress,
+            },
+          } as unknown as PaymentSuccessEventData);
 
           break;
         case android.app.Activity.RESULT_CANCELED:
           // The user cancelled the payment attempt
           this.notify({
             eventName: GooglePayEvents.PaymentCancelled,
-            object: this
+            object: this,
           } as PaymentCancelledEventData);
           break;
         case com.google.android.gms.wallet.AutoResolveHelper.RESULT_ERROR:
@@ -322,8 +322,8 @@ export class GooglePayBtn extends View {
               isSuccess: status.isSuccess(),
               status: status.getStatus(),
               statusCode: status.getStatusCode(),
-              statusMessage: status.getStatusMessage()
-            }
+              statusMessage: status.getStatusMessage(),
+            },
           } as PaymentErrorEventData);
           break;
       }
@@ -351,10 +351,7 @@ export class GooglePayBtn extends View {
 
       cardPaymentMethod.put('parameters', parameters);
 
-      const isReadyToPayRequest = new JSONObject()
-        .put('apiVersion', 2)
-        .put('apiVersionMinor', 0)
-        .put('allowedPaymentMethods', new JSONArray().put(cardPaymentMethod));
+      const isReadyToPayRequest = new JSONObject().put('apiVersion', 2).put('apiVersionMinor', 0).put('allowedPaymentMethods', new JSONArray().put(cardPaymentMethod));
 
       return java.util.Optional.of(isReadyToPayRequest);
     } catch (ex) {
@@ -371,12 +368,9 @@ export class GooglePayBtn extends View {
     // https://developers.google.com/pay/api/android/reference/request-objects#TransactionInfo
     // it is not listed in the object anymore
     if (args.transactionInfo?.displayItems?.length >= 1) {
-      args.transactionInfo.displayItems.forEach(el => {
+      args.transactionInfo.displayItems.forEach((el) => {
         const item = new JSONObject();
-        item
-          .put('label', el.label)
-          .put('type', el.type)
-          .put('price', el.price);
+        item.put('label', el.label).put('type', el.type).put('price', el.price);
         displayItemsArray.put(item);
       });
 
@@ -441,21 +435,21 @@ export class GooglePayBtn extends View {
 export const cardNetworksProperty = new Property<GooglePayBtn, string>({
   name: 'cardNetworks',
   defaultValue: '',
-  affectsLayout: false
+  affectsLayout: false,
 });
 cardNetworksProperty.register(GooglePayBtn);
 
 export const authMethodsProperty = new Property<GooglePayBtn, string>({
   name: 'authMethods',
   defaultValue: '',
-  affectsLayout: false
+  affectsLayout: false,
 });
 authMethodsProperty.register(GooglePayBtn);
 
 export const buttonType = new Property<GooglePayBtn, string>({
   name: 'buttonType',
   defaultValue: 'light',
-  affectsLayout: false
+  affectsLayout: false,
 });
 buttonType.register(GooglePayBtn);
 

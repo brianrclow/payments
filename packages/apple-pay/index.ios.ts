@@ -70,10 +70,10 @@ export class ApplePayBtn extends View {
         const paymentRequest = PKPaymentRequest.alloc().init();
         const paymentItems: NSMutableArray<PKPaymentSummaryItem> = NSMutableArray.array();
 
-        request.paymentItems.forEach(el => {
+        request.paymentItems.forEach((el) => {
           const item = new PKPaymentSummaryItem();
           item.label = el.label;
-          item.type = (el.type as number) as PKPaymentSummaryItemType;
+          item.type = el.type as number as PKPaymentSummaryItemType;
           item.amount = NSDecimalNumber.alloc().initWithDouble(el.amount);
           paymentItems.addObject(item);
         });
@@ -86,7 +86,7 @@ export class ApplePayBtn extends View {
 
         if (request.shippingContactFields) {
           const requiredShippingContactFields = NSMutableSet.alloc().init() as NSMutableSet<string>;
-          request.shippingContactFields.forEach(el => {
+          request.shippingContactFields.forEach((el) => {
             requiredShippingContactFields.addObject(el);
           });
           paymentRequest.requiredShippingContactFields = requiredShippingContactFields;
@@ -94,7 +94,7 @@ export class ApplePayBtn extends View {
 
         if (request.billingContactFields) {
           const requiredBillingContactFields = NSMutableSet.alloc().init() as NSMutableSet<string>;
-          request.billingContactFields.forEach(el => {
+          request.billingContactFields.forEach((el) => {
             requiredBillingContactFields.addObject(el);
           });
           paymentRequest.requiredBillingContactFields = requiredBillingContactFields;
@@ -167,39 +167,39 @@ export class ApplePayBtn extends View {
 export const buttonTypeProperty = new Property<ApplePayBtn, ApplePayButtonType>({
   name: 'buttonType',
   defaultValue: ApplePayButtonType.InStore,
-  affectsLayout: false
+  affectsLayout: false,
 });
 buttonTypeProperty.register(ApplePayBtn);
 
 export const buttonStyleProperty = new Property<ApplePayBtn, ApplePayButtonStyle>({
   name: 'buttonStyle',
   defaultValue: ApplePayButtonStyle.Black,
-  affectsLayout: false
+  affectsLayout: false,
 });
 buttonStyleProperty.register(ApplePayBtn);
 
 const ApplePayBtnTapHandlerImpl = (<any>NSObject).extend(
   {
-    tap: function(nativeButton: any, nativeEvent: UIEvent) {
+    tap: function (nativeButton: any, nativeEvent: UIEvent) {
       const owner: ApplePayBtn = nativeButton._owner;
       if (owner) {
         owner.notify({
           eventName: 'tap',
-          object: owner
+          object: owner,
         });
       }
-    }
+    },
   },
   {
     exposedMethods: {
       tap: {
         returns: interop.types.void,
-        params: [interop.types.id, interop.types.id]
-      }
-    }
+        params: [interop.types.id, interop.types.id],
+      },
+    },
   }
 );
-ApplePayBtnTapHandlerImpl.initWithOwner = function(owner: WeakRef<ApplePayBtn>) {
+ApplePayBtnTapHandlerImpl.initWithOwner = function (owner: WeakRef<ApplePayBtn>) {
   const handler = ApplePayBtnTapHandlerImpl.new();
   handler._owner = owner;
   return handler;

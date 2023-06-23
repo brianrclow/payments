@@ -3,8 +3,8 @@ import { NativeScriptCommonModule, NativeScriptRouterModule } from '@nativescrip
 import { ApplePayComponent } from './apple-pay.component';
 
 @NgModule({
-	imports: [NativeScriptCommonModule, NativeScriptRouterModule.forChild([{ path: '', component: ApplePayComponent }])],
+  imports: [NativeScriptCommonModule, NativeScriptRouterModule.forChild([{ path: '', component: ApplePayComponent }])],
   declarations: [ApplePayComponent],
-  schemas: [ NO_ERRORS_SCHEMA]
+  schemas: [NO_ERRORS_SCHEMA],
 })
 export class ApplePayModule {}

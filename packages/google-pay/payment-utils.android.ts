@@ -15,10 +15,7 @@ export class PaymentsUtil {
    * environment and theme set in {@link Constants}.
    */
   public static createPaymentsClient(environment, theme) {
-    const walletOptions = new com.google.android.gms.wallet.Wallet.WalletOptions.Builder()
-      .setEnvironment(environment)
-      .setTheme(theme)
-      .build();
+    const walletOptions = new com.google.android.gms.wallet.Wallet.WalletOptions.Builder().setEnvironment(environment).setTheme(theme).build();
     return com.google.android.gms.wallet.Wallet.getPaymentsClient(Application.android.startActivity || Application.android.foregroundActivity, walletOptions);
   }
 
@@ -28,9 +25,6 @@ export class PaymentsUtil {
    * @param cents value of the price in cents.
    */
   public static centsToString(cents) {
-    return new java.math.BigDecimal(cents)
-      .divide(PaymentsUtil.CENTS_IN_A_UNIT, java.math.RoundingMode.HALF_EVEN)
-      .setScale(2, java.math.RoundingMode.HALF_EVEN)
-      .toString();
+    return new java.math.BigDecimal(cents).divide(PaymentsUtil.CENTS_IN_A_UNIT, java.math.RoundingMode.HALF_EVEN).setScale(2, java.math.RoundingMode.HALF_EVEN).toString();
   }
 }
