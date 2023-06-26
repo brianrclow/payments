@@ -1,5 +1,3 @@
 dependencies {
-    def billingVersion = "6.0.0"
-    
-    implementation 'com.android.billingclient:billing:$billingVersion'
+    implementation 'com.android.billingclient:billing:6.0.0'
 }

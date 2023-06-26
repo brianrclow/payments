@@ -180,6 +180,18 @@ export function startOrder(item: Item, skuType: string, buyItemOptions?: BuyItem
   if (_billingClient) {
     let pendingCount = 0;
     const pending = _billingClient.queryPurchases(skuType).getPurchasesList();
+    // const listener = new com.android.billingclient.api.PurchasesResponseListener;
+    // const queryPurchaseParams = com.android.billingclient.api.QueryPurchasesParams.newBuilder().setProductType(skuType).build();
+
+    // _billingClient.queryPurchasesAsync(queryPurchaseParams, listener);
+
+    // const billingResult = new com.android.billingclient.api.BillingResult;
+    // const purchaseList = new List<com.android.billingclient.api.Purchase>;
+
+    // const pending = listener.onQueryPurchasesResponse(billingResult, purchaseList)
+    // purchaseList.size();
+
+    // checks if the purchase list exists or not
     if (pending) {
       pendingCount = pending.size();
     }
